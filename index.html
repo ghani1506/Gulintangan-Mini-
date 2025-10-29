@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Interactive Gamelan — Uniform Piano Keys</title>
+  <meta name="description" content="Chromatic gamelan (C4→C5) with uniform key sizes and sharps stacked on top. Ultra-low latency." />
+  <style>
+    :root{
+      --brand:#0ea5e9; --ink:#0f172a; --muted:#64748b; --bg:#f6f7fb; --card:#ffffff;
+      --padImage: url('assets/gamelan.png');
+    }
+    *{ box-sizing:border-box; }
+    html, body{ height:100%; }
+    body{ margin:0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      color:var(--ink); background:var(--bg); }
+    header{ background:linear-gradient(90deg, #0369a1, #0ea5e9); color:#fff; padding:18px 16px; }
+    header h1{ margin:0; font-size:20px; }
+    main{ max-width:1100px; margin:24px auto; padding:0 16px; }
+    .pill{ background:rgba(255,255,255,.9); color:#0f172a; padding:6px 10px; border-radius:999px; font-size:13px; }
+    .bar{ display:flex; gap:12px; align-items:center; flex-wrap:wrap; }
+    .controls{ display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin:12px 0 18px; }
+    button.ctrl{ padding:8px 12px; border-radius:10px; border:1px solid #e5e7eb; background:#fff; cursor:pointer; }
+    button.ctrl.primary{ background:#0ea5e9; color:#fff; border-color:transparent; }
+    input[type="file"]{ display:none; }
+    label.file{ padding:8px 12px; border:1px dashed #87c9ff; color:#0369a1; border-radius:10px; cursor:pointer; background:#eef7ff; }
+
+    .status{ color:var(--muted); margin:10px 0 14px; min-height:1.2em; }
+
+    /* Keyboard container */
+    #kb{ position:relative; user-select:none; -webkit-user-select:none; touch-action: manipulation; }
+
+    /* 8 white columns */
+    .whites{ display:grid; grid-template-columns: repeat(8, 1fr); gap:8px; }
+    .blacks{ position:absolute; inset:0 0 auto 0; display:grid; grid-template-columns: repeat(8, 1fr); gap:8px; pointer-events:none; z-index:2; }
+
+    /* Pads (all same size) */
+    .pad{
+      height: 160px; border-radius:14px; padding:8px;
+      appearance:none; border:1px solid rgba(0,0,0,.12);
+      cursor:pointer; text-align:center; pointer-events:auto;
+      display:flex; flex-direction:column; align-items:center; justify-content:flex-end; gap:6px;
+      background-image: var(--padImage);
+      background-size: cover; background-position: center;
+      color:#0f172a; font-weight:700;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.35), 0 8px 18px rgba(0,0,0,.08);
+      transition: transform .02s ease, filter .06s ease;
+    }
+    .pad.active, .pad:active{ transform: translateY(1px) scale(.998); filter: brightness(1.05) saturate(1.05); }
+
+    .kbd{ font-size:11px; opacity:.95; background:rgba(255,255,255,.85); color:#0f172a; border-radius:6px; padding:2px 6px; border:1px solid rgba(0,0,0,.06); margin-bottom:6px; }
+    .note{ font-size:14px; text-shadow: 0 1px 2px rgba(0,0,0,.18); }
+
+    footer{ text-align:center; color:var(--muted); padding:24px 0 40px; }
+
+    /* Position sharps directly above their base columns (full-size, stacked) */
+    .k-cs { grid-column: 2; }  /* above D (between C and D) */
+    .k-ds { grid-column: 3; }  /* above E (between D and E) */
+    /* no black between E and F */
+    .k-fs { grid-column: 5; }  /* above G (between F and G) */
+    .k-gs { grid-column: 6; }  /* above A (between G and A) */
+    .k-as { grid-column: 7; }  /* above B (between A and B) */
+
+    /* Slight vertical offset so sharps clearly sit "on top" */
+    .blacks .pad{ margin-top: -6px; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Interactive Gamelan — Uniform Piano Keys</h1>
+  </header>
+
+  <main>
+    <div class="bar">
+      <span class="pill">Chromatic: C4 → C5 (13 notes)</span>
+      <span class="pill">Sharps same size • stacked on top</span>
+      <span class="pill">Real gamelan image</span>
+    </div>
+
+    <div class="controls">
+      <button id="unlock" class="ctrl primary">Enable Sound</button>
+      <button id="mute" class="ctrl">Mute</button>
+      <label class="pill">Gain <input id="gain" type="range" min="0" max="1.4" step="0.01" value="0.9"></label>
+      <label class="pill">Decay <input id="decay" type="range" min="0.2" max="4" step="0.05" value="1.6"></label>
+      <label class="pill">Damping <input id="damp" type="range" min="200" max="12000" step="50" value="8500"></label>
+
+      <label for="img" class="file">📷 Upload Gamelan Image</label>
+      <input id="img" type="file" accept="image/*" />
+    </div>
+
+    <div id="kb" aria-label="Gamelan keyboard">
+      <div id="whites" class="whites"></div>
+      <div id="blacks" class="blacks"></div>
+    </div>
+
+    <div id="status" class="status">Tap “Enable Sound” once to unlock audio. Then play.</div>
+  </main>
+
+  <script type="module" src="./main.js"></script>
+
+  <footer>
+    <p>© 2025 • Built for learning • Optimized for minimal strike latency</p>
+  </footer>
+</body>
+</html>
