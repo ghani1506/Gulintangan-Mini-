@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Interactive Gamelan — Two-Row Bonang Layout</title>
+  <meta name="description" content="Chromatic gamelan (C4→C5) arranged as two rows of gongs, like bonang/keromong. Ultra-low latency." />
+  <style>
+    :root{
+      --brand:#0ea5e9; --ink:#0f172a; --muted:#64748b; --bg:#f6f7fb; --card:#ffffff;
+      --padImage: url('assets/gamelan.png');
+    }
+    *{ box-sizing:border-box; }
+    html, body{ height:100%; }
+    body{ margin:0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      color:var(--ink); background:var(--bg); }
+    header{ background:linear-gradient(90deg, #0369a1, #0ea5e9); color:#fff; padding:18px 16px; }
+    header h1{ margin:0; font-size:20px; }
+    main{ max-width:1100px; margin:24px auto; padding:0 16px; }
+    .pill{ background:rgba(255,255,255,.9); color:#0f172a; padding:6px 10px; border-radius:999px; font-size:13px; }
+    .bar{ display:flex; gap:12px; align-items:center; flex-wrap:wrap; }
+    .controls{ display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin:12px 0 18px; }
+    button.ctrl{ padding:8px 12px; border-radius:10px; border:1px solid #e5e7eb; background:#fff; cursor:pointer; }
+    button.ctrl.primary{ background:#0ea5e9; color:#fff; border-color:transparent; }
+    input[type="file"]{ display:none; }
+    label.file{ padding:8px 12px; border:1px dashed #87c9ff; color:#0369a1; border-radius:10px; cursor:pointer; background:#eef7ff; }
+
+    .status{ color:var(--muted); margin:10px 0 14px; min-height:1.2em; }
+
+    /* Two-row bonang layout */
+    #frame{ display:flex; flex-direction:column; align-items:center; gap:16px; user-select:none; -webkit-user-select:none; touch-action: manipulation; }
+    .row{ display:grid; gap:14px; align-items:center; }
+    .row.top{ grid-template-columns: repeat(6, minmax(64px, 1fr)); }
+    .row.bottom{ grid-template-columns: repeat(7, minmax(64px, 1fr)); }
+
+    /* Circular gong buttons */
+    .pad{
+      width: 108px; height: 108px; border-radius: 999px;
+      appearance:none; border:1px solid rgba(0,0,0,.15);
+      cursor:pointer; text-align:center; pointer-events:auto;
+      display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px;
+      background-image: var(--padImage);
+      background-size: cover; background-position: center;
+      color:#0f172a; font-weight:700;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.35), 0 8px 18px rgba(0,0,0,.12);
+      transition: transform .02s ease, filter .06s ease;
+    }
+    .pad.active, .pad:active{ transform: translateY(1px) scale(.992); filter: brightness(1.05) saturate(1.06); }
+
+    .labels{ display:flex; gap:24px; justify-content:center; color:#64748b; font-size:13px; }
+    .kbd{ font-size:11px; opacity:.95; background:rgba(255,255,255,.85); color:#0f172a; border-radius:999px; padding:2px 6px; border:1px solid rgba(0,0,0,.06); }
+    .note{ font-size:14px; text-shadow: 0 1px 2px rgba(0,0,0,.18); }
+
+    footer{ text-align:center; color:var(--muted); padding:24px 0 40px; }
+    @media (max-width: 760px){
+      .row.top{ grid-template-columns: repeat(6, 1fr); }
+      .row.bottom{ grid-template-columns: repeat(7, 1fr); }
+      .pad{ width:86px; height:86px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Interactive Gamelan — Two-Row Bonang Layout</h1>
+  </header>
+
+  <main>
+    <div class="bar">
+      <span class="pill">Top row (6): C♯ D♯ F♯ G♯ A♯ C</span>
+      <span class="pill">Bottom row (7): C D E F G A B</span>
+      <span class="pill">Ultra-low latency • Real gong image</span>
+    </div>
+
+    <div class="controls">
+      <button id="unlock" class="ctrl primary">Enable Sound</button>
+      <button id="mute" class="ctrl">Mute</button>
+      <label class="pill">Gain <input id="gain" type="range" min="0" max="1.4" step="0.01" value="0.9"></label>
+      <label class="pill">Decay <input id="decay" type="range" min="0.2" max="4" step="0.05" value="1.6"></label>
+      <label class="pill">Damping <input id="damp" type="range" min="200" max="12000" step="50" value="8500"></label>
+
+      <label for="img" class="file">📷 Upload Gamelan Image</label>
+      <input id="img" type="file" accept="image/*" />
+    </div>
+
+    <div id="frame" aria-label="Gamelan two-row frame">
+      <div id="rowTop" class="row top"></div>
+      <div id="rowBottom" class="row bottom"></div>
+    </div>
+
+    <div id="status" class="status">Tap “Enable Sound” once to unlock audio. Then play.</div>
+  </main>
+
+  <script type="module" src="./main.js"></script>
+
+  <footer>
+    <p>© 2025 • Built for learning • Optimized for minimal strike latency</p>
+  </footer>
+</body>
+</html>
