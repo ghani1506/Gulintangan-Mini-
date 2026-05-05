@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>COVID-19 Educational Simulation — Idea & Concept</title>
+  <style>
+    body { font-family: "Segoe UI", Roboto, sans-serif; background:#f5f7fa; margin:0; color:#333; line-height:1.6; }
+    header { background:#1a73e8; color:white; padding:20px; text-align:center; }
+    main { max-width:900px; margin:40px auto; padding:20px; background:white; border-radius:10px; box-shadow:0 4px 10px rgba(0,0,0,0.1); }
+    h1, h2 { color:#1a73e8; }
+    .concept { background:#eef4ff; border-left:6px solid #1a73e8; padding:15px; margin:20px 0; }
+    ul { margin-top:10px; padding-left:25px; }
+    footer { text-align:center; padding:20px; color:#777; font-size:0.9em; }
+    a { color:#1a73e8; text-decoration:none; }
+    a:hover { text-decoration:underline; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>COVID-19 Educational Simulation</h1>
+    <p>An Interactive Visualization for Understanding Disease Spread</p>
+  </header>
+
+  <main>
+    <section>
+      <h2>💡 Project Idea</h2>
+      <p>
+        This simulation was designed as an <strong>educational tool</strong> to help students, teachers, and the public
+        visualize how an infectious disease like COVID-19 spreads in a community.
+        It simplifies the epidemiological model into five visible states — <strong>Susceptible (S)</strong>,
+        <strong>Exposed (E)</strong>, <strong>Infectious (I)</strong>, <strong>Recovered (R)</strong>, and
+        <strong>Vaccinated (V)</strong>.
+      </p>
+      <div class="concept">
+        <p><strong>Goal:</strong> To make abstract public‑health concepts (like transmission rate, mask use, or social distancing)
+        more tangible and interactive through simulation and data visualization.</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>🔬 How It Works</h2>
+      <p>
+        Individuals are colored dots moving randomly. On close contact, infection may occur; exposed dots later become infectious and then recover.
+      </p>
+      <ul>
+        <li><strong>Blue</strong> — Susceptible</li>
+        <li><strong>Orange</strong> — Exposed</li>
+        <li><strong>Red</strong> — Infectious</li>
+        <li><strong>Green</strong> — Recovered</li>
+        <li><strong>Purple</strong> — Vaccinated</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>⚙️ Adjustable Parameters</h2>
+      <ul>
+        <li>Population size</li>
+        <li>Mobility (movement speed)</li>
+        <li>Mask usage percentage</li>
+        <li>Social distancing level</li>
+        <li>Transmission probability (β)</li>
+        <li>Incubation & infectious durations</li>
+        <li>Vaccination coverage</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>🌐 Technology Stack</h2>
+      <ul>
+        <li><strong>JavaScript + Canvas</strong> — default fallback simulation</li>
+        <li><strong>Python (Pyodide)</strong> — optional, if you supply <code>sim.py</code></li>
+        <li><strong>GitHub Pages</strong> — static hosting</li>
+      </ul>
+    </section>
+
+    <p style="margin-top:30px;">
+      <a href="index.html">← Back to Simulation</a>
+    </p>
+  </main>
+
+  <footer>
+    <p>© 2025 COVID‑19 Educational Simulation • Built for learning and public awareness</p>
+  </footer>
+</body>
+</html>
